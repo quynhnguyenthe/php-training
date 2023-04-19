@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,16 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/page/{page}/id/{id}', [HomeController::class, 'index']);
+
+Route::get('/dashboard', 'App\Http\Controllers\ShowDashboard');
+
 Route::prefix('cms')->group(function () {
     Route::get('/', '\App\Http\Controllers\AuthController@index');
     Route::get('login', '\App\Http\Controllers\AuthController@index');
     Route::get('register', '\App\Http\Controllers\AuthController@register');
 });
 
-Route::get('/string-response', [\App\Http\Controllers\ResponseDemoController::class, 'stringBasicResponse']);
-Route::get('/array-response', [\App\Http\Controllers\ResponseDemoController::class, 'arrayBasicResponse']);
-Route::get('/obj-response', [\App\Http\Controllers\ResponseDemoController::class, 'OBJResponse']);
-Route::get('/view-response', [\App\Http\Controllers\ResponseDemoController::class, 'viewResponse']);
+Route::get('/string-response', [ResponseDemoController::class, 'stringBasicResponse']);
+Route::get('/array-response', [ResponseDemoController::class, 'arrayBasicResponse']);
+Route::get('/obj-response', [ResponseDemoController::class, 'OBJResponse']);
+Route::get('/view-response', [ResponseDemoController::class, 'viewResponse']);
+
+Route::get('/post', [PostController::class, 'index']);
+Route::get('/show/{id}', [PostController::class, 'show']);
+
+Route::post('/post', [PostController::class, 'store']);
+
